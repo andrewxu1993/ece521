@@ -76,6 +76,7 @@ def a2t2(batch_size,learning_rate):
     tf.initialize_all_variables().run()
     print ("initialized")
     va=[]
+    ta=[]
     for step in range (step_num):
       offset=(step*batch_size)%(train_labels.shape[0]-batch_size)
       x_batch=train_dataset[offset:(offset+batch_size),:]
@@ -83,14 +84,21 @@ def a2t2(batch_size,learning_rate):
 
 
       feed_dict={x_train:x_batch,y_train:y_batch}
-      _,l,tp,vp=session.run([optimizer,cost,train_prediction,valid_prediction],feed_dict=feed_dict)
+      _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
+                               feed_dict=feed_dict)
 
       if (step%100==0):
         print ("Minibatch loss at step %d: %f" %(step,l))
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
+        ta.append(accuracy(tp,test_labels))
+        if va[-1]<va[-2]:
+          va.pop(1)
+          ta.pop(1)
+          break
+
         #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
-    print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(),test_labels))
+    print("Test accuracy: %.1f%%" % ta[-1])
     return va
 
 if __name__=="__main__":
@@ -104,7 +112,7 @@ if __name__=="__main__":
   #vas.append(a2t2(20,0.0001))
 
   vas.append(a2t2(100,0.001))
-  vas.append(a2t2(100,0.0001))
+  vas.append(a2t2(100,0.0001)) # the best
   vas.append(a2t2(100,0.00005))
   vas.append(a2t2(100,0.00001))
   vas.append(a2t2(100,0.000001))
