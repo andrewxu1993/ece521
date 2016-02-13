@@ -13,7 +13,7 @@ num_labels=10
 
 batch_size=50
 
-print ("Stamp 7")
+print ("Stamp 8")
 
 images=images.T.astype("float32")
 labels=np.eye(10)[labels[:,0]].astype("float32")
@@ -100,7 +100,7 @@ with tf.Session(graph=graph) as session:
     if (step%100==0):
       print ("Minibatch loss at step %d: %f" %(step,l))
       #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
-      va.append(accuracy(tp,y_batch))
+      va.append(accuracy(vp,valid_labels))
       #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
   print (va)
   print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(),test_labels))
