@@ -13,7 +13,7 @@ num_labels=10
 
 batch_size=50
 
-print ("Stamp 8")
+print ("Stamp 9")
 
 images=images.T.astype("float32")
 labels=np.eye(10)[labels[:,0]].astype("float32")
@@ -68,7 +68,7 @@ with graph.as_default():
   logits=tf.matmul(logits,w2)
   #print logits.get_shape()
   logits=tf.add(logits,b2)
-
+  logits=tf.nn.relu(logits)
   #print logits.get_shape()
   #print y_train.get_shape()
 
