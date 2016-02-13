@@ -61,10 +61,10 @@ for epoch in range(1000):
   if epoch % 50 == 0:
     cost_train, accuracy_train = sess.run([cost, accuracy],
                                           feed_dict={X: x_train, Y: t_train})
-    cost_eval, accuracy_eval, norm_w_np = sess.run([cost, accuracy, norm_w],
+    cost_eval, accuracy_eval = sess.run([cost, accuracy],
                                                    feed_dict={X: x_eval, Y: t_eval})
-    print ("Epoch:%04d, cost=%0.9f, Train Accuracy=%0.4f, Eval Accuracy=%0.4f,    Norm of Weights=%0.4f" %
-           (epoch+1, cost_train, accuracy_train, accuracy_eval, norm_w_np))
+    print ("Epoch:%04d, cost=%0.9f, Train Accuracy=%0.4f, Eval Accuracy=%0.4f" %
+           (epoch+1, cost_train, accuracy_train, accuracy_eval))
 
 #print entropy(1000,1)
 #print entropy(-1000,0)
