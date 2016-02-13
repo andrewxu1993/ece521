@@ -11,9 +11,9 @@ image_size=28
 num_channels=1
 num_labels=10
 
-batch_size=200
+batch_size=100
 
-
+print ("Stamp 2")
 
 images=images.T.astype("float32")
 labels=np.eye(10)[labels[:,0]].astype("float32")
@@ -38,7 +38,7 @@ hidden_num=1000
 
 graph = tf.Graph()
 
-print ("Stamp 1")
+
 
 with graph.as_default():
   x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
