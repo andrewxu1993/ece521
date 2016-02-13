@@ -58,7 +58,6 @@ def a2t2(batch_size,learning_rate):
     logits=tf.nn.relu(logits)
     logits=tf.matmul(logits,w2)
     logits=tf.add(logits,b2)
-    logits=tf.nn.relu(logits)
 
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
@@ -91,9 +90,10 @@ def a2t2(batch_size,learning_rate):
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
         #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
-    print (va)
     print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(),test_labels))
+    return va
 
 if __name__=="__main__":
-  print ("Stamp 3")
-  a2t2(1000,0.001)
+  print ("Stamp 4")
+  vas=[]
+  vas.append(a2t2(1000,0.001))
