@@ -75,7 +75,7 @@ with graph.as_default():
   test_prediction=tf.matmul(test_dataset,w)+b
   test_prediction=tf.nn.softmax(tf.matmul(test_prediction,w2)+b2)
 
-step_num=30001
+step_num=3000
 
 with tf.Session(graph=graph) as session:
   tf.initialize_all_variables().run()
