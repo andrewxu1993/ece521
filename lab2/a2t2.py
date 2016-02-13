@@ -13,9 +13,10 @@ num_labels=10
 
 batch_size=200
 
+
+
 images=images.T.astype("float32")
 labels=np.eye(10)[labels[:,0]].astype("float32")
-
 
 s=images.shape
 images=images.reshape(s[0],image_size*image_size)
@@ -37,7 +38,7 @@ hidden_num=1000
 
 graph = tf.Graph()
 
-print ("Stamp 1159")
+print ("Stamp 1160")
 
 with graph.as_default():
   x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
@@ -49,22 +50,26 @@ with graph.as_default():
   b=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
 
   # layer 2
-  w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,1]))
+  w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,10]))
   b2=tf.Variable(tf.truncated_normal([num_labels]))
 
 
 
   #print x_train.get_shape()
   logits=tf.matmul(x_train,w)
+  logits=tf.add(logits,b)
   #print logits.get_shape()
   #logits=tf.nn.relu(tf.reshape(logits,[batch_size,num_labels,hidden_num])+b)
-  logits=tf.nn.relu(logits+b)
+  logits=tf.nn.relu(logits)
   #print logits.get_shape()
   #print w2.get_shape()
   #print b2.get_shape()
-  logits=tf.matmul(logits,w2)+b2
+  print logits.get_shape()
+  logits=tf.matmul(logits,w2)
+  print logits.get_shape()
+  logits=tf.add(logits,b2)
 
-  #print logits.get_shape()
+  print logits.get_shape()
   #print y_train.get_shape()
 
   cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
