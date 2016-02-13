@@ -68,7 +68,6 @@ with graph.as_default():
   logits=tf.matmul(logits,w2)
   #print logits.get_shape()
   logits=tf.add(logits,b2)
-  logits=tf.nn.relu(logits)
   #print logits.get_shape()
   #print y_train.get_shape()
 
