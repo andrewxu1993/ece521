@@ -37,6 +37,8 @@ hidden_num=1000
 
 graph = tf.Graph()
 
+print ("Stamp 1159")
+
 with graph.as_default():
   x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
   y_train=tf.placeholder(tf.float32,shape=(batch_size,num_labels))
@@ -57,13 +59,13 @@ with graph.as_default():
   #print logits.get_shape()
   #logits=tf.nn.relu(tf.reshape(logits,[batch_size,num_labels,hidden_num])+b)
   logits=tf.nn.relu(logits+b)
-  print logits.get_shape()
+  #print logits.get_shape()
   #print w2.get_shape()
   #print b2.get_shape()
   logits=tf.matmul(logits,w2)+b2
 
-  print logits.get_shape()
-  print y_train.get_shape()
+  #print logits.get_shape()
+  #print y_train.get_shape()
 
   cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
