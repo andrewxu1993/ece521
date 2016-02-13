@@ -96,19 +96,17 @@ def a2t2(batch_size,learning_rate):
 if __name__=="__main__":
   print ("Stamp 6")
   vas=[]
-  #vas.append(a2t2(200,0.01))
-  #vas.append(a2t2(100,0.01))
-  #vas.append(a2t2(50,0.01))
-  #vas.append(a2t2(20,0.01))
 
-  vas.append(a2t2(200,0.0001))
-  vas.append(a2t2(100,0.0001))
-  vas.append(a2t2(50,0.0001))
-  vas.append(a2t2(20,0.0001))
 
   #vas.append(a2t2(200,0.0001))
   #vas.append(a2t2(100,0.0001))
   #vas.append(a2t2(50,0.0001))
   #vas.append(a2t2(20,0.0001))
+
+  vas.append(a2t2(100,0.001))
+  vas.append(a2t2(100,0.0001))
+  vas.append(a2t2(100,0.00005))
+  vas.append(a2t2(100,0.00001))
+  vas.append(a2t2(100,0.000001))
 
   print vas
