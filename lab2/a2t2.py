@@ -95,5 +95,5 @@ def a2t2(batch_size,learning_rate):
     print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(),test_labels))
 
 if __name__=="__main__":
-  print ("Stamp 2")
-  a2t2(100,0.001)
+  print ("Stamp 3")
+  a2t2(1000,0.001)
