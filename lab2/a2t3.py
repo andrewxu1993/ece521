@@ -63,10 +63,10 @@ def a2t2(batch_size,learning_rate,hidden_num):
     optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate/10).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.matmul(valid_dataset,w)+b
-    valid_prediction=tf.nn.softmax(tf.matmul(valid_prediction,w2)+b2)
-    test_prediction=tf.matmul(test_dataset,w)+b
-    test_prediction=tf.nn.softmax(tf.matmul(test_prediction,w2)+b2)
+    valid_prediction=tf.add(tf.matmul(valid_dataset,w),b)
+    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w2),b2))
+    test_prediction=tf.add(tf.matmul(test_dataset,w),b)
+    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w2),b2))
 
   step_num=1000
 

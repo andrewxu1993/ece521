@@ -4,13 +4,14 @@ import tensorflow as tf
 def accuracy(predictions, labels):
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/ predictions.shape[0])
 
-def a2t2(batch_size,learning_rate):
+def a2t2(batch_size,learning_rate,hidden_num):
   with np.load("notMNIST.npz") as data:
       images, labels = data["images"], data["labels"]
 
   image_size=28
   num_channels=1
   num_labels=10
+  hidden_num=hidden_num/2 # split into two layers
 
 
   images=images.T.astype("float32")
@@ -32,8 +33,6 @@ def a2t2(batch_size,learning_rate):
   #print test_dataset.shape
 
 
-  hidden_num=1000
-
   graph = tf.Graph()
 
 
@@ -44,20 +43,27 @@ def a2t2(batch_size,learning_rate):
 
 
     # layer 1
-    w=tf.Variable(tf.truncated_normal([image_size*image_size,num_labels*hidden_num]))
-    b=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
+    w1=tf.Variable(tf.truncated_normal([image_size*image_size,num_labels*hidden_num]))
+    b1=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
 
-    # layer 2
-    w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,10]))
-    b2=tf.Variable(tf.truncated_normal([num_labels]))
+    # layer2
+    w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,num_labels*hidden_num]))
+    b2=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
+
+    # layer 3
+    w3=tf.Variable(tf.truncated_normal([num_labels*hidden_num,10]))
+    b3=tf.Variable(tf.truncated_normal([num_labels]))
 
 
 
-    logits=tf.matmul(x_train,w)
-    logits=tf.add(logits,b)
+    logits=tf.matmul(x_train,w1)
+    logits=tf.add(logits,b1)
     logits=tf.nn.relu(logits)
     logits=tf.matmul(logits,w2)
     logits=tf.add(logits,b2)
+    logits=tf.nn.relu(logits)
+    logits=tf.matmul(logits,w3)
+    logits=tf.add(logits,b3)
 
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
@@ -65,10 +71,13 @@ def a2t2(batch_size,learning_rate):
     optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate/10).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.add(tf.matmul(valid_dataset,w),b)
-    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w2),b2))
-    test_prediction=tf.add(tf.matmul(test_dataset,w),b)
-    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w2),b2))
+    valid_prediction=tf.add(tf.matmul(valid_dataset,w1),b1)
+    valid_prediction=tf.add(tf.matmul(valid_prediction,w2),b2)
+    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w3),b3))
+    test_prediction=tf.add(tf.matmul(test_dataset,w1),b1)
+    test_prediction=tf.add(tf.matmul(test_prediction,w2),b2)
+    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w3),b3))
+
 
   step_num=1000
 
@@ -102,19 +111,12 @@ def a2t2(batch_size,learning_rate):
     return va
 
 if __name__=="__main__":
-  print ("Stamp 6")
+  print ("Stamp 1")
   vas=[]
 
 
-  #vas.append(a2t2(200,0.0001))
-  #vas.append(a2t2(100,0.0001))
-  #vas.append(a2t2(50,0.0001))
-  #vas.append(a2t2(20,0.0001))
-
-  vas.append(a2t2(100,0.001))
-  vas.append(a2t2(100,0.0001)) # the best
-  vas.append(a2t2(100,0.00005))
-  vas.append(a2t2(100,0.00001))
-  vas.append(a2t2(100,0.000001))
+  vas.append(a2t2(100,0.0001,100)) # the best
+  vas.append(a2t2(100,0.0001,500)) # the best
+  vas.append(a2t2(100,0.0001,2000)) # the best
 
   print vas
