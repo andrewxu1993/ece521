@@ -11,7 +11,7 @@ image_size=28
 num_channels=1
 num_labels=10
 
-batch_size=200
+batch_size=1000
 
 
 
