@@ -67,7 +67,7 @@ with graph.as_default():
 
   cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-  optimizer=tf.train.GradientDescentOptimizer(0.001).minimize(cost)
+  optimizer=tf.train.MomentumOptimizer(0.001,0.01).minimize(cost)
 
   train_prediction=tf.nn.softmax(logits)
   valid_prediction=tf.matmul(valid_dataset,w)+b
