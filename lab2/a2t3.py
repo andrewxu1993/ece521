@@ -90,7 +90,7 @@ def a2t2(batch_size,learning_rate,hidden_num):
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
         ta.append(accuracy(tp,test_labels))
-        if len(va)>5 and va[-1]<va[-2]:
+        if len(va)>5 and va[-1]<va[-2] and va[-1]<va[-3]:
           va.pop(1)
           ta.pop(1)
           break
