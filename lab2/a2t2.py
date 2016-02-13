@@ -11,9 +11,9 @@ image_size=28
 num_channels=1
 num_labels=10
 
-batch_size=100
+batch_size=50
 
-print ("Stamp 5")
+print ("Stamp 6")
 
 images=images.T.astype("float32")
 labels=np.eye(10)[labels[:,0]].astype("float32")
