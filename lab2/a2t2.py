@@ -53,22 +53,13 @@ def a2t2(batch_size,learning_rate):
 
 
 
-    #print x_train.get_shape()
     logits=tf.matmul(x_train,w)
     logits=tf.add(logits,b)
-    #print logits.get_shape()
-    #logits=tf.nn.relu(tf.reshape(logits,[batch_size,num_labels,hidden_num])+b)
     logits=tf.nn.relu(logits)
-    #print logits.get_shape()
-    #print w2.get_shape()
-    #print b2.get_shape()
-    #print logits.get_shape()
     logits=tf.matmul(logits,w2)
-    #print logits.get_shape()
     logits=tf.add(logits,b2)
     logits=tf.nn.relu(logits)
-    #print logits.get_shape()
-    #print y_train.get_shape()
+
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
@@ -104,5 +95,5 @@ def a2t2(batch_size,learning_rate):
     print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(),test_labels))
 
 if __name__=="__main__":
-  print ("Stamp 1")
-  a2t2(50,0.001)
+  print ("Stamp 2")
+  a2t2(100,0.001)
