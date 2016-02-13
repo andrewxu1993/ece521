@@ -13,7 +13,7 @@ num_labels=10
 
 batch_size=50
 
-print ("Stamp 6")
+print ("Stamp 7")
 
 images=images.T.astype("float32")
 labels=np.eye(10)[labels[:,0]].astype("float32")
@@ -82,11 +82,12 @@ with graph.as_default():
   test_prediction=tf.matmul(test_dataset,w)+b
   test_prediction=tf.nn.softmax(tf.matmul(test_prediction,w2)+b2)
 
-step_num=3000
+step_num=1000
 
 with tf.Session(graph=graph) as session:
   tf.initialize_all_variables().run()
   print ("initialized")
+  va=[]
   for step in range (step_num):
     offset=(step*batch_size)%(train_labels.shape[0]-batch_size)
     x_batch=train_dataset[offset:(offset+batch_size),:]
@@ -98,6 +99,8 @@ with tf.Session(graph=graph) as session:
 
     if (step%100==0):
       print ("Minibatch loss at step %d: %f" %(step,l))
-      print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
-      print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
+      #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
+      va.append(accuracy(tp,y_batch))
+      #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
+  print (va)
   print("Test accuracy: %.1f%%" % accuracy(test_prediction.eval(),test_labels))
