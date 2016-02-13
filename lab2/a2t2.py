@@ -11,7 +11,7 @@ image_size=28
 num_channels=1
 num_labels=10
 
-batch_size=500
+batch_size=200
 
 
 
@@ -38,7 +38,7 @@ hidden_num=1000
 
 graph = tf.Graph()
 
-print ("Stamp 1162")
+print ("Stamp 1")
 
 with graph.as_default():
   x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
@@ -64,12 +64,12 @@ with graph.as_default():
   #print logits.get_shape()
   #print w2.get_shape()
   #print b2.get_shape()
-  print logits.get_shape()
+  #print logits.get_shape()
   logits=tf.matmul(logits,w2)
-  print logits.get_shape()
+  #print logits.get_shape()
   logits=tf.add(logits,b2)
 
-  print logits.get_shape()
+  #print logits.get_shape()
   #print y_train.get_shape()
 
   cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
@@ -96,7 +96,7 @@ with tf.Session(graph=graph) as session:
     feed_dict={x_train:x_batch,y_train:y_batch}
     _,l,tp,vp=session.run([optimizer,cost,train_prediction,valid_prediction],feed_dict=feed_dict)
 
-    if (step%50==0):
+    if (step%100==0):
       print ("Minibatch loss at step %d: %f" %(step,l))
       print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
       print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
