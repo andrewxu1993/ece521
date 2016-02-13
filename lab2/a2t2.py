@@ -62,7 +62,7 @@ def a2t2(batch_size,learning_rate):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
+    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate/10).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.matmul(valid_dataset,w)+b
@@ -94,7 +94,7 @@ def a2t2(batch_size,learning_rate):
     return va
 
 if __name__=="__main__":
-  print ("Stamp 5")
+  print ("Stamp 6")
   vas=[]
   #vas.append(a2t2(200,0.01))
   #vas.append(a2t2(100,0.01))
