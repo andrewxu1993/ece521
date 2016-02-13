@@ -13,7 +13,7 @@ num_labels=10
 
 batch_size=100
 
-print ("Stamp 2")
+print ("Stamp 3")
 
 images=images.T.astype("float32")
 labels=np.eye(10)[labels[:,0]].astype("float32")
@@ -74,7 +74,7 @@ with graph.as_default():
 
   cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-  optimizer=tf.train.MomentumOptimizer(0.001,0.001).minimize(cost)
+  optimizer=tf.train.MomentumOptimizer(0.0001,0.0001).minimize(cost)
 
   train_prediction=tf.nn.softmax(logits)
   valid_prediction=tf.matmul(valid_dataset,w)+b
