@@ -11,7 +11,7 @@ image_size=28
 num_channels=1
 num_labels=10
 
-batch_size=1000
+batch_size=100
 
 
 
@@ -38,7 +38,7 @@ hidden_num=1000
 
 graph = tf.Graph()
 
-print ("Stamp 1160")
+print ("Stamp 1161")
 
 with graph.as_default():
   x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
@@ -74,7 +74,7 @@ with graph.as_default():
 
   cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-  optimizer=tf.train.MomentumOptimizer(0.001,0.01).minimize(cost)
+  optimizer=tf.train.MomentumOptimizer(0.0001,0.0001).minimize(cost)
 
   train_prediction=tf.nn.softmax(logits)
   valid_prediction=tf.matmul(valid_dataset,w)+b
