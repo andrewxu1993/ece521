@@ -79,7 +79,7 @@ def a2t5(batch_size,learning_rate,layer_num,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=model(valid_dataset,layer_num,hidden_num)
@@ -126,10 +126,7 @@ if __name__=="__main__":
 
 
 
-
-  #vas.append(a2t4(100,0.0001,500)) # the best
-  #vas.append(a2t4(100,0.00001,500)) # the best
-  vas.append(a2t5(100,0.0001,3,500)) # the best
+  vas.append(a2t5(100,0.000001,3,500)) # the best
 
 
 
