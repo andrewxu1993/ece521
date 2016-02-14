@@ -11,7 +11,6 @@ def a2t2(batch_size,learning_rate,hidden_num):
   image_size=28
   num_channels=1
   num_labels=10
-  hidden_num=hidden_num/2 # split into two layers
 
 
   images=images.T.astype("float32")
