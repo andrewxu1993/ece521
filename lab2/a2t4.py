@@ -57,7 +57,7 @@ def a2t2(batch_size,learning_rate,hidden_num):
 
     logits=tf.matmul(x_train,w1)
     logits=tf.add(logits,b1)
-    #logits=tf.nn.relu(logits)
+    logits=tf.nn.relu(logits)
     logits=tf.matmul(logits,w2)
     logits=tf.add(logits,b2)
     logits=tf.nn.relu(logits)
