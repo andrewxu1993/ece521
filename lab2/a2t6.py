@@ -337,7 +337,7 @@ if __name__=="__main__":
   rd.seed(datetime.now())
 
   for i in range(0,total_run):
-    lr=10**rd.uniform(-2,-4)
+    lr=10**rd.uniform(-4,-6)
     ln=rd.randint(1,3)
     hn=rd.randint(1,5)*100
     learning_r.append(lr)
