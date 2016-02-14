@@ -343,6 +343,7 @@ if __name__=="__main__":
     learning_r.append(lr)
     layer_n.append(ln)
     hidden_n.append(hn)
+    ln=1
     if ln==2:
       vas.append(l2(100,lr,hn)) # the best
     elif ln==3:
