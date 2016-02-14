@@ -42,11 +42,11 @@ def a2t2(batch_size,learning_rate,hidden_num):
 
 
     # layer 1
-    w=tf.Variable(tf.truncated_normal([image_size*image_size,num_labels*hidden_num]))
-    b=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
+    w=tf.Variable(tf.truncated_normal([image_size*image_size,hidden_num]))
+    b=tf.Variable(tf.truncated_normal([hidden_num]))
 
     # layer 2
-    w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,10]))
+    w2=tf.Variable(tf.truncated_normal([hidden_num,num_labels]))
     b2=tf.Variable(tf.truncated_normal([num_labels]))
 
 
@@ -103,9 +103,8 @@ if __name__=="__main__":
   print ("Stamp 1")
   vas=[]
 
-
-  vas.append(a2t2(100,0.0001,100)) # the best
-  vas.append(a2t2(100,0.0001,500)) # the best
-  vas.append(a2t2(100,0.0001,2000)) # the best
+  vas.append(a2t2(100,0.0001,100))
+  vas.append(a2t2(100,0.0001,500))
+  vas.append(a2t2(100,0.0001,2000))
 
   print vas

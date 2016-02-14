@@ -42,15 +42,15 @@ def a2t2(batch_size,learning_rate,hidden_num):
 
 
     # layer 1
-    w1=tf.Variable(tf.truncated_normal([image_size*image_size,num_labels*hidden_num]))
-    b1=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
+    w1=tf.Variable(tf.truncated_normal([image_size*image_size,hidden_num]))
+    b1=tf.Variable(tf.truncated_normal([hidden_num]))
 
     # layer2
-    w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,num_labels*hidden_num]))
-    b2=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
+    w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,hidden_num]))
+    b2=tf.Variable(tf.truncated_normal([hidden_num]))
 
     # layer 3
-    w3=tf.Variable(tf.truncated_normal([num_labels*hidden_num,num_labels]))
+    w3=tf.Variable(tf.truncated_normal([hidden_num,num_labels]))
     b3=tf.Variable(tf.truncated_normal([num_labels]))
 
 
@@ -67,7 +67,7 @@ def a2t2(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate/10).minimize(cost)
+    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.add(tf.matmul(valid_dataset,w1),b1)
