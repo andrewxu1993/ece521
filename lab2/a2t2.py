@@ -92,10 +92,10 @@ def a2t2(batch_size,learning_rate):
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
         ta.append(accuracy(tp,test_labels))
-        if len(va)>5:
-          va.pop(1)
-          ta.pop(1)
-          break
+        #if len(va)>5:
+        #  va.pop(1)
+        #  ta.pop(1)
+        #  break
 
         #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
     print("Test accuracy: %.1f%%" % ta[-1])
