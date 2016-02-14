@@ -106,15 +106,15 @@ if __name__=="__main__":
   vas=[]
 
 
-  #vas.append(a2t2(200,0.0001))
-  #vas.append(a2t2(100,0.0001))
-  #vas.append(a2t2(50,0.0001))
-  #vas.append(a2t2(20,0.0001))
+  vas.append(a2t2(200,0.0001))
+  vas.append(a2t2(100,0.0001))
+  vas.append(a2t2(50,0.0001))
+  vas.append(a2t2(20,0.0001))
 
-  vas.append(a2t2(100,0.001))
-  vas.append(a2t2(100,0.0001)) # the best
-  vas.append(a2t2(100,0.00005))
-  vas.append(a2t2(100,0.00001))
-  vas.append(a2t2(100,0.000001))
+  #vas.append(a2t2(100,0.001))
+  #vas.append(a2t2(100,0.0001)) # the best
+  #vas.append(a2t2(100,0.00005))
+  #vas.append(a2t2(100,0.00001))
+  #vas.append(a2t2(100,0.000001))
 
   print vas
