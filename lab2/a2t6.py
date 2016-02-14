@@ -129,7 +129,7 @@ if __name__=="__main__":
 
 
 
-  vas.append(a2t5(100,10^rd.uniform(-2,-4),rd.randint(1,3),rd.randint(1,5)*100)) # the best
+  vas.append(a2t5(100,10**rd.uniform(-2,-4),rd.randint(1,3),rd.randint(1,5)*100)) # the best
 
 
 
