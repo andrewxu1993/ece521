@@ -72,9 +72,9 @@ def l2(batch_size,learning_rate,hidden_num):
     optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.add(tf.matmul(valid_dataset,w1),b1)
-    valid_prediction=tf.add(tf.matmul(valid_prediction,w2),b2)
-    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w3),b3))
+    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
+    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_prediction,w2),b2))
+    valid_prediction=tf.nn.softmax(tf.matmul(valid_prediction,w3),b3)
     test_prediction=tf.add(tf.matmul(test_dataset,w1),b1)
     test_prediction=tf.add(tf.matmul(test_prediction,w2),b2)
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w3),b3))
@@ -185,13 +185,13 @@ def l3(batch_size,learning_rate,hidden_num):
     optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.add(tf.matmul(valid_dataset,w1),b1)
-    valid_prediction=tf.add(tf.matmul(valid_prediction,w2),b2)
-    valid_prediction=tf.add(tf.matmul(valid_prediction,w3),b3)
+    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
+    valid_prediction=tf.add(tf.nn.relu(tf.matmul(valid_prediction,w2),b2))
+    valid_prediction=tf.add(tf.nn.relu(tf.matmul(valid_prediction,w3),b3))
     valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w4),b4))
-    test_prediction=tf.add(tf.matmul(test_dataset,w1),b1)
-    test_prediction=tf.add(tf.matmul(test_prediction,w2),b2)
-    test_prediction=tf.add(tf.matmul(test_prediction,w3),b3)
+    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_dataset,w1),b1))
+    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_prediction,w2),b2))
+    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_prediction,w3),b3))
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w4),b4))
 
 
@@ -287,10 +287,10 @@ def l1(batch_size,learning_rate,hidden_num):
     optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.add(tf.matmul(valid_dataset,w1),b1)
-    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w4),b4))
-    test_prediction=tf.add(tf.matmul(test_dataset,w1),b1)
-    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w4),b4))
+    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
+    valid_prediction=tf.nn.softmax(tf.nn.relu(tf.add(tf.matmul(valid_prediction,w4),b4)))
+    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_dataset,w1),b1))
+    test_prediction=tf.nn.softmax(tf.nn.relu(tf.add(tf.matmul(test_prediction,w4),b4)))
 
 
   step_num=1000
