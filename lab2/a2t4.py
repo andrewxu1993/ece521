@@ -50,7 +50,7 @@ def a2t2(batch_size,learning_rate,hidden_num):
     b2=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
 
     # layer 3
-    w3=tf.Variable(tf.truncated_normal([num_labels*hidden_num,10]))
+    w3=tf.Variable(tf.truncated_normal([num_labels*hidden_num,num_labels]))
     b3=tf.Variable(tf.truncated_normal([num_labels]))
 
 
@@ -115,7 +115,7 @@ if __name__=="__main__":
 
 
 
-  vas.append(a2t2(100,0.0001,500)) # the best
+  vas.append(a2t2(100,0.000001,500)) # the best
 
 
   print vas
