@@ -186,8 +186,8 @@ def l3(batch_size,learning_rate,hidden_num):
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
-    valid_prediction=tf.add(tf.nn.relu(tf.matmul(valid_prediction,w2),b2))
-    valid_prediction=tf.add(tf.nn.relu(tf.matmul(valid_prediction,w3),b3))
+    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_prediction,w2),b2))
+    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_prediction,w3),b3))
     valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w4),b4))
     test_prediction=tf.nn.relu(tf.add(tf.matmul(test_dataset,w1),b1))
     test_prediction=tf.nn.relu(tf.add(tf.matmul(test_prediction,w2),b2))
