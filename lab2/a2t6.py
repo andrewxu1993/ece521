@@ -327,7 +327,7 @@ def l1(batch_size,learning_rate,hidden_num):
 
 if __name__=="__main__":
 
-  total_run=2
+  total_run=5
 
   learning_r=[]
   layer_n=[]
@@ -343,7 +343,6 @@ if __name__=="__main__":
     learning_r.append(lr)
     layer_n.append(ln)
     hidden_n.append(hn)
-    ln=3
     if ln==2:
       vas.append(l2(100,lr,hn)) # the best
     elif ln==3:
