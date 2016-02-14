@@ -327,7 +327,7 @@ def l1(batch_size,learning_rate,hidden_num):
 
 if __name__=="__main__":
 
-  total_run=5
+  total_run=10
 
   learning_r=[]
   layer_n=[]
