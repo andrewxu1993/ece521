@@ -1,5 +1,7 @@
 import numpy as np
 import tensorflow as tf
+import random as rd
+from datetime import datetime
 
 def accuracy(predictions, labels):
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/ predictions.shape[0])
@@ -121,12 +123,13 @@ def a2t5(batch_size,learning_rate,layer_num,hidden_num):
     return va
 
 if __name__=="__main__":
-  print ("Stamp 1")
   vas=[]
 
+  rd.seed(datetime.now())
 
 
-  vas.append(a2t5(100,0.000001,3,500)) # the best
+
+  vas.append(a2t5(100,10^rd.uniform(-2,-4),rd.randint(1,3),rd.randint(1,5)*100)) # the best
 
 
 
