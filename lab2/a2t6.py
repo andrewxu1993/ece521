@@ -145,5 +145,5 @@ if __name__=="__main__":
 
 
   for i in range(0,total_run):
-    print ("The case with learning rate "+ str(learning_r[i])+", layer number "+str(layer_n[i]
-            +", hidden number "+str(hidden_n[i])+", has validating accuracy: "+str(vas[i])))
+    print ("The case with learning rate "+ str(learning_r[i])+", layer number "+str(layer_n[i])
+            +", hidden number "+str(hidden_n[i])+", has validating accuracy: "+str(vas[i]))
