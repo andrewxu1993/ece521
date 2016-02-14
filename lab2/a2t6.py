@@ -124,6 +124,9 @@ def a2t5(batch_size,learning_rate,layer_num,hidden_num):
     return va[-1]
 
 if __name__=="__main__":
+
+  total_run=2
+
   learning_r=[]
   layer_n=[]
   hidden_n=[]
@@ -131,7 +134,7 @@ if __name__=="__main__":
 
   rd.seed(datetime.now())
 
-  for i in range(0,10):
+  for i in range(0,total_run):
     lr=10**rd.uniform(-2,-4)
     ln=rd.randint(1,3)
     hn=rd.randint(1,5)*100
@@ -141,6 +144,6 @@ if __name__=="__main__":
     vas.append(a2t5(100,lr,ln,hn)) # the best
 
 
-  for i in range(0,2):
+  for i in range(0,total_run):
     print ("The case with learning rate "+ str(learning_r[i])+", layer number "+str(layer_n[i]
             +", hidden number "+str(hidden_n[i])+", has validating accuracy: "+str(vas[i])))
