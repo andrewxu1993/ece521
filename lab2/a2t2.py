@@ -44,11 +44,11 @@ def a2t2(batch_size,learning_rate):
 
 
     # layer 1
-    w=tf.Variable(tf.truncated_normal([image_size*image_size,num_labels*hidden_num]))
-    b=tf.Variable(tf.truncated_normal([num_labels*hidden_num]))
+    w=tf.Variable(tf.truncated_normal([image_size*image_size,hidden_num]))
+    b=tf.Variable(tf.truncated_normal([hidden_num]))
 
     # layer 2
-    w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,10]))
+    w2=tf.Variable(tf.truncated_normal([hidden_num,num_labels]))
     b2=tf.Variable(tf.truncated_normal([num_labels]))
 
 
