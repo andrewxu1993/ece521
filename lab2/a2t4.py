@@ -46,7 +46,7 @@ def a2t4(batch_size,learning_rate,hidden_num):
     b1=tf.Variable(tf.truncated_normal([hidden_num]))
 
     # layer2
-    w2=tf.Variable(tf.truncated_normal([num_labels*hidden_num,hidden_num]))
+    w2=tf.Variable(tf.truncated_normal([hidden_num,hidden_num]))
     b2=tf.Variable(tf.truncated_normal([hidden_num]))
 
     # layer 3
