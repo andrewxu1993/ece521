@@ -284,7 +284,7 @@ def l1(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
