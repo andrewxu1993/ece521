@@ -4,7 +4,7 @@ import tensorflow as tf
 def accuracy(predictions, labels):
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/ predictions.shape[0])
 
-def a2t2(batch_size,learning_rate,hidden_num):
+def a2t4(batch_size,learning_rate,hidden_num):
   with np.load("notMNIST.npz") as data:
       images, labels = data["images"], data["labels"]
 
@@ -115,7 +115,7 @@ if __name__=="__main__":
 
 
 
-  vas.append(a2t2(100,0.000001,500)) # the best
+  vas.append(a2t4(100,0.000001,500)) # the best
 
 
   print vas
