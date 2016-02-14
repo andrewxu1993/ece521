@@ -69,7 +69,7 @@ def l2(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
@@ -182,7 +182,7 @@ def l3(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
@@ -337,7 +337,7 @@ if __name__=="__main__":
   rd.seed(datetime.now())
 
   for i in range(0,total_run):
-    lr=10**rd.uniform(-4,-6)
+    lr=10**rd.uniform(-2,-4)
     ln=rd.randint(1,3)
     hn=rd.randint(1,5)*100
     learning_r.append(lr)
