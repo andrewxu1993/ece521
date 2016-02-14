@@ -12,28 +12,26 @@ def model(x_train,layer_num,hidden_num):
   # layer 1
   w1=tf.Variable(tf.truncated_normal([image_size*image_size,hidden_num]))
   b1=tf.Variable(tf.truncated_normal([hidden_num]))
+  w2=tf.Variable(tf.truncated_normal([hidden_num,hidden_num]))
+  b2=tf.Variable(tf.truncated_normal([hidden_num]))
+  w3=tf.Variable(tf.truncated_normal([hidden_num,hidden_num]))
+  b3=tf.Variable(tf.truncated_normal([hidden_num]))
+
   logits=tf.matmul(x_train,w1)
   logits=tf.add(logits,b1)
   logits=tf.nn.relu(logits)
 
   if layer_num==2:
     # layer2
-    w2=tf.Variable(tf.truncated_normal([hidden_num,hidden_num]))
-    b2=tf.Variable(tf.truncated_normal([hidden_num]))
     logits=tf.matmul(logits,w2)
     logits=tf.add(logits,b2)
     logits=tf.nn.relu(logits)
   elif layer_num==3:
     # layer2
-    w2=tf.Variable(tf.truncated_normal([hidden_num,hidden_num]))
-    b2=tf.Variable(tf.truncated_normal([hidden_num]))
     logits=tf.matmul(logits,w2)
     logits=tf.add(logits,b2)
     logits=tf.nn.relu(logits)
     #layer3
-    # layer2
-    w3=tf.Variable(tf.truncated_normal([hidden_num,hidden_num]))
-    b3=tf.Variable(tf.truncated_normal([hidden_num]))
     logits=tf.matmul(logits,w3)
     logits=tf.add(logits,b3)
     logits=tf.nn.relu(logits)
