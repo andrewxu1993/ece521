@@ -78,7 +78,7 @@ def a2t4(batch_size,learning_rate,hidden_num):
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w3),b3))
 
 
-  step_num=1000
+  step_num=2000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
@@ -116,8 +116,8 @@ if __name__=="__main__":
 
 
 
-  vas.append(a2t4(100,0.0001,500)) # the best
-  vas.append(a2t4(100,0.00001,500)) # the best
+  #vas.append(a2t4(100,0.0001,500)) # the best
+  #vas.append(a2t4(100,0.00001,500)) # the best
   vas.append(a2t4(100,0.000001,500)) # the best
   vas.append(a2t4(100,0.0000005,500)) # the best
 
