@@ -91,7 +91,7 @@ def a2t5(batch_size,learning_rate,layer_num,hidden_num):
 
 
 
-  step_num=2000
+  step_num=1000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
@@ -108,8 +108,8 @@ def a2t5(batch_size,learning_rate,layer_num,hidden_num):
       _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
                                feed_dict=feed_dict)
 
-      if (step%10==0):
-        print ("Minibatch loss at step %d: %f" %(step,l))
+      if (step%100==0):
+        #print ("Minibatch loss at step %d: %f" %(step,l))
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
         ta.append(accuracy(tp,test_labels))
@@ -120,7 +120,8 @@ def a2t5(batch_size,learning_rate,layer_num,hidden_num):
 
         #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
     print("Test accuracy: %.1f%%" % ta[-1])
-    return va
+    print va
+    return va[-1]
 
 if __name__=="__main__":
   learning_r=[]
@@ -140,6 +141,6 @@ if __name__=="__main__":
     vas.append(a2t5(100,lr,ln,hn)) # the best
 
 
-  for i in range(0,10):
+  for i in range(0,2):
     print ("The case with learning rate "+ str(learning_r[i])+", layer number "+str(layer_n[i]
             +", hidden number "+str(hidden_n[i])+", has validating accuracy: "+str(vas[i])))
