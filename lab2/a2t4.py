@@ -97,7 +97,7 @@ def a2t4(batch_size,learning_rate,hidden_num):
 
       if (step%10==0):
         print ("Minibatch loss at step %d: %f" %(step,l))
-        print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
+        #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
         ta.append(accuracy(tp,test_labels))
         #if len(va)>5 and va[-1]<va[-2] and va[-1]<va[-3]:
@@ -115,7 +115,9 @@ if __name__=="__main__":
 
 
 
-  vas.append(a2t4(100,0.000001,500)) # the best
+  vas.append(a2t4(100,0.001,500)) # the best
+  vas.append(a2t4(100,0.0001,500)) # the best
+  vas.append(a2t4(100,0.00001,500)) # the best
 
 
   print vas
