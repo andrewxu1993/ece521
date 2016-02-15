@@ -103,8 +103,7 @@ if __name__=="__main__":
   print ("Stamp 1")
   vas=[]
 
-  vas.append(a2t3(100,0.0001,100))
-  vas.append(a2t3(100,0.0001,500))
+
   vas.append(a2t3(100,0.00001,100))
   vas.append(a2t3(100,0.00001,500))
   vas.append(a2t3(100,0.000001,100))
