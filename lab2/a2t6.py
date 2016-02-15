@@ -195,7 +195,7 @@ def l3(batch_size,learning_rate,hidden_num):
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w4),b4))
 
 
-  step_num=1000
+  step_num=10000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()

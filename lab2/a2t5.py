@@ -71,7 +71,7 @@ def a2t2(batch_size,learning_rate):
     test_prediction=tf.add(tf.matmul(test_dataset,w),b)
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w2),b2))
 
-  step_num=1000
+  step_num=10000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()

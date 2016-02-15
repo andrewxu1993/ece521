@@ -67,7 +67,7 @@ def a2t4(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.add(tf.matmul(valid_dataset,w1),b1)
@@ -78,7 +78,7 @@ def a2t4(batch_size,learning_rate,hidden_num):
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w3),b3))
 
 
-  step_num=2000
+  step_num=10000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
@@ -118,7 +118,7 @@ if __name__=="__main__":
 
   #vas.append(a2t4(100,0.0001,500)) # the best
   #vas.append(a2t4(100,0.00001,500)) # the best
-  vas.append(a2t4(100,0.000001,500)) # the best
+  vas.append(a2t4(100,0.0001,500)) # the best
 
 
 

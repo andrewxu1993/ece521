@@ -60,7 +60,7 @@ def a2t3(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate/10).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.add(tf.matmul(valid_dataset,w),b)
@@ -68,7 +68,7 @@ def a2t3(batch_size,learning_rate,hidden_num):
     test_prediction=tf.add(tf.matmul(test_dataset,w),b)
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w2),b2))
 
-  step_num=1000
+  step_num=10000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()

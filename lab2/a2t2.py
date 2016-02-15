@@ -62,7 +62,7 @@ def a2t2(batch_size,learning_rate):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate/10).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.add(tf.matmul(valid_dataset,w),b)
@@ -70,7 +70,7 @@ def a2t2(batch_size,learning_rate):
     test_prediction=tf.add(tf.matmul(test_dataset,w),b)
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w2),b2))
 
-  step_num=1000
+  step_num=10000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
@@ -106,15 +106,16 @@ if __name__=="__main__":
   vas=[]
 
 
-  vas.append(a2t2(200,0.0001))
-  vas.append(a2t2(100,0.0001))
-  vas.append(a2t2(50,0.0001))
-  vas.append(a2t2(20,0.0001))
+  #vas.append(a2t2(200,0.0001))
+  #vas.append(a2t2(100,0.0001))
+  #vas.append(a2t2(50,0.0001))
+  #vas.append(a2t2(20,0.0001))
 
-  #vas.append(a2t2(100,0.001))
-  #vas.append(a2t2(100,0.0001)) # the best
-  #vas.append(a2t2(100,0.00005))
-  #vas.append(a2t2(100,0.00001))
-  #vas.append(a2t2(100,0.000001))
+  vas.append(a2t2(100,0.000001))
+  vas.append(a2t2(100,0.00001))
+  vas.append(a2t2(100,0.0001))
+  vas.append(a2t2(100,0.001))
+  vas.append(a2t2(100,0.01))
+
 
   print vas
