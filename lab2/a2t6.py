@@ -297,7 +297,7 @@ def l1(batch_size,learning_rate,hidden_num):
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
-    print ("initialized")
+    #print ("initialized")
     va=[]
     ta=[]
     for step in range (step_num):

@@ -75,7 +75,7 @@ def a2t2(batch_size,learning_rate):
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
-    print ("initialized")
+    #print ("initialized")
     va=[]
     ta=[]
     for step in range (step_num):
@@ -89,7 +89,7 @@ def a2t2(batch_size,learning_rate):
                                feed_dict=feed_dict)
 
       if (step%100==0):
-        print ("Minibatch loss at step %d: %f" %(step,l))
+        #print ("Minibatch loss at step %d: %f" %(step,l))
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
         ta.append(accuracy(tp,test_labels))
