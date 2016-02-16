@@ -110,13 +110,11 @@ def a2t4(batch_size,learning_rate,hidden_num):
     return validate_error
 
 if __name__=="__main__":
-  print ("Stamp 1")
   vas=[]
 
 
 
-  vas.append(a2t4(100,0.0001,500)) # the best
-  vas.append(a2t4(100,0.00001,500)) # the best
+  vas.append(a2t4(100,0.01,500)) # the best
 
 
 

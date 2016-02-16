@@ -106,7 +106,6 @@ def a2t5(batch_size,learning_rate):
     return validate_error
 
 if __name__=="__main__":
-  print ("Stamp 6")
   vas=[]
 
 
@@ -115,7 +114,7 @@ if __name__=="__main__":
   #vas.append(a2t2(50,0.0001))
   #vas.append(a2t2(20,0.0001))
 
-  vas.append(a2t5(100,0.001))
+  vas.append(a2t5(100,0.01))
   vas.append(a2t5(100,0.0001)) # the best
   vas.append(a2t5(100,0.00001)) # the best
 
