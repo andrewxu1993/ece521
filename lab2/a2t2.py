@@ -96,7 +96,7 @@ def a2t2(batch_size,learning_rate):
       validate_error.append(vp)
       validate_likelihood.append(-1*l)
 
-      print("Validation Likelihood: %.5f, Validation Error Number: %.1f" % (-1*l,vp))
+      print("Epoch %03d, Validation Likelihood: %.5f, Validation Error Number: %.1f" % (step,-1*l,vp))
 
     feed_dict={x_train:test_dataset,y_train:test_labels}
     _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
