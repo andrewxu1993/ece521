@@ -39,8 +39,8 @@ def a2t4(batch_size,learning_rate,hidden_num):
 
 
   with graph.as_default():
-    x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
-    y_train=tf.placeholder(tf.float32,shape=(batch_size,num_labels))
+    x_train=tf.placeholder(tf.float32,shape=(None,image_size*image_size))
+    y_train=tf.placeholder(tf.float32,shape=(None,num_labels))
 
 
     # layer 1

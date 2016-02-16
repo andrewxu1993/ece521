@@ -41,8 +41,8 @@ def a2t5(batch_size,learning_rate):
 
 
   with graph.as_default():
-    x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
-    y_train=tf.placeholder(tf.float32,shape=(batch_size,num_labels))
+    x_train=tf.placeholder(tf.float32,shape=(None,image_size*image_size))
+    y_train=tf.placeholder(tf.float32,shape=(None,num_labels))
 
 
     # layer 1
