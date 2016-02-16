@@ -97,7 +97,7 @@ def a2t2(batch_size,learning_rate):
         #  ta.pop(1)
         #  break
 
-        #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
+        print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
     print("Test accuracy: %.1f%%" % ta[-1])
     return va
 
