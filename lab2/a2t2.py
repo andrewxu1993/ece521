@@ -63,7 +63,7 @@ def a2t2(batch_size,learning_rate):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=y_train))
 
-    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
 
@@ -80,7 +80,7 @@ def a2t2(batch_size,learning_rate):
     validate_error=[]
 
     for step in range (epoch_num):
-      for j in range (15000/batch_size):
+      for j in range (150):
         x_batch=train_dataset[j*batch_size:(j+1)*batch_size,:]
         y_batch=train_labels[j*batch_size:(j+1)*batch_size,:]
 
