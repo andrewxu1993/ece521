@@ -2,7 +2,9 @@ import numpy as np
 import tensorflow as tf
 
 def accuracy(predictions, labels):
-  return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/ predictions.shape[0])
+  predictions=tf.argmax(predictions, 1)
+  labels=tf.argmax(labels, 1)
+  return tf.reduce_sum(tf.cast(tf.not_equal(predictions,labels),"float32"))
 
 def a2t2(batch_size,learning_rate):
   with np.load("notMNIST.npz") as data:
@@ -59,12 +61,12 @@ def a2t2(batch_size,learning_rate):
     logits=tf.matmul(logits,w2)
     logits=tf.add(logits,b2)
 
-
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=y_train))
 
     optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
+
     er=accuracy(train_prediction,y_train)
 
   step_num=150000
@@ -88,17 +90,16 @@ def a2t2(batch_size,learning_rate):
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         feed_dict={x_train:valid_dataset,y_train:valid_labels}
         _,l,vp=session.run([optimizer,cost,er], feed_dict=feed_dict)
-        va.append(accuracy(vp,valid_labels))
 
         #if len(va)>5:
         #  va.pop(1)
         #  ta.pop(1)
         #  break
 
-        print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
+        print("Validation Error Number: .1f%%" % vp)
     feed_dict={x_train:test_dataset,y_train:test_labels}
     _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
-    print("Test accuracy: %.1f%%" % tp)
+    print("Test Error Number: .1f%%" % tp)
     return va
 
 if __name__=="__main__":
