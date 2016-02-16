@@ -12,7 +12,7 @@ def a2t2(batch_size,learning_rate):
   num_channels=1
   num_labels=10
 
-
+  images=images/255.0
   images=images.T.astype("float32")
   labels=np.eye(10)[labels[:,0]].astype("float32")
 
@@ -60,9 +60,9 @@ def a2t2(batch_size,learning_rate):
     logits=tf.add(logits,b2)
 
 
-    cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
+    cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=y_train))
 
-    optimizer=tf.train.MomentumOptimizer(learning_rate,learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
     valid_prediction=tf.add(tf.matmul(valid_dataset,w),b)
@@ -70,7 +70,7 @@ def a2t2(batch_size,learning_rate):
     test_prediction=tf.add(tf.matmul(test_dataset,w),b)
     test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w2),b2))
 
-  step_num=2000
+  step_num=150000
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
@@ -87,7 +87,7 @@ def a2t2(batch_size,learning_rate):
       _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
                                feed_dict=feed_dict)
 
-      if (step%200==0):
+      if (step%15000==0):
         #print ("Minibatch loss at step %d: %f" %(step,l))
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
