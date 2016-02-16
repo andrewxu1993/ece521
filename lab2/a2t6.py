@@ -4,7 +4,9 @@ import random as rd
 from datetime import datetime
 
 def accuracy(predictions, labels):
-  return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/ predictions.shape[0])
+  predictions=tf.argmax(predictions, 1)
+  labels=tf.argmax(labels, 1)
+  return tf.reduce_sum(tf.cast(tf.not_equal(predictions,labels),"float32"))
 
 def l2(batch_size,learning_rate,hidden_num):
   with np.load("notMNIST.npz") as data:
@@ -69,48 +71,45 @@ def l2(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
-    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_prediction,w2),b2))
-    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w3),b3))
-    test_prediction=tf.add(tf.matmul(test_dataset,w1),b1)
-    test_prediction=tf.add(tf.matmul(test_prediction,w2),b2)
-    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w3),b3))
 
+    er=accuracy(train_prediction,y_train)
 
-  step_num=1000
+  epoch_num=100
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
-    print ("initialized")
-    va=[]
-    ta=[]
-    for step in range (step_num):
-      offset=(step*batch_size)%(train_labels.shape[0]-batch_size)
-      x_batch=train_dataset[offset:(offset+batch_size),:]
-      y_batch=train_labels[offset:(offset+batch_size),:]
+    #print ("initialized")
+    training_likelihood=[]
+    training_error=[]
+    validate_likelihood=[]
+    validate_error=[]
+
+    for step in range (epoch_num):
+      for j in range (150):
+        x_batch=train_dataset[j*batch_size:(j+1)*batch_size]
+        y_batch=train_labels[j*batch_size:(j+1)*batch_size]
 
 
-      feed_dict={x_train:x_batch,y_train:y_batch}
-      _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
-                               feed_dict=feed_dict)
+        feed_dict={x_train:x_batch,y_train:y_batch}
+        _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
 
-      if (step%100==0):
-        #print ("Minibatch loss at step %d: %f" %(step,l))
-        #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
-        va.append(accuracy(vp,valid_labels))
-        ta.append(accuracy(tp,test_labels))
-        #if len(va)>5 and va[-1]<va[-2] and va[-1]<va[-3]:
-        #  va.pop(1)
-        #  ta.pop(1)
-        #  break
+      training_error.append(tp)
+      training_likelihood.append(-1*l)
 
-        #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
-    print("Test accuracy: %.1f%%" % ta[-1])
-    print va
-    return va
+      feed_dict={x_train:valid_dataset,y_train:valid_labels}
+      _,l,vp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+      validate_error.append(vp)
+      validate_likelihood.append(-1*l)
+
+      print("Epoch %03d, Validation Likelihood: %.5f, Validation Error Number: %.1f" % (step,-1*l,vp))
+
+    feed_dict={x_train:test_dataset,y_train:test_labels}
+    _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+    print("Test Error Number: %.1f" % tp)
+    return validate_error
 
 def l3(batch_size,learning_rate,hidden_num):
   with np.load("notMNIST.npz") as data:
@@ -182,50 +181,45 @@ def l3(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
-    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_prediction,w2),b2))
-    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_prediction,w3),b3))
-    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w4),b4))
-    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_dataset,w1),b1))
-    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_prediction,w2),b2))
-    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_prediction,w3),b3))
-    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w4),b4))
 
+    er=accuracy(train_prediction,y_train)
 
-  step_num=10000
+  epoch_num=100
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
-    print ("initialized")
-    va=[]
-    ta=[]
-    for step in range (step_num):
-      offset=(step*batch_size)%(train_labels.shape[0]-batch_size)
-      x_batch=train_dataset[offset:(offset+batch_size),:]
-      y_batch=train_labels[offset:(offset+batch_size),:]
+    #print ("initialized")
+    training_likelihood=[]
+    training_error=[]
+    validate_likelihood=[]
+    validate_error=[]
+
+    for step in range (epoch_num):
+      for j in range (150):
+        x_batch=train_dataset[j*batch_size:(j+1)*batch_size]
+        y_batch=train_labels[j*batch_size:(j+1)*batch_size]
 
 
-      feed_dict={x_train:x_batch,y_train:y_batch}
-      _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
-                               feed_dict=feed_dict)
+        feed_dict={x_train:x_batch,y_train:y_batch}
+        _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
 
-      if (step%100==0):
-        #print ("Minibatch loss at step %d: %f" %(step,l))
-        #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
-        va.append(accuracy(vp,valid_labels))
-        ta.append(accuracy(tp,test_labels))
-        #if len(va)>5 and va[-1]<va[-2] and va[-1]<va[-3]:
-        #  va.pop(1)
-        #  ta.pop(1)
-        #  break
+      training_error.append(tp)
+      training_likelihood.append(-1*l)
 
-        #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
-    print("Test accuracy: %.1f%%" % ta[-1])
-    print va
-    return va
+      feed_dict={x_train:valid_dataset,y_train:valid_labels}
+      _,l,vp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+      validate_error.append(vp)
+      validate_likelihood.append(-1*l)
+
+      print("Epoch %03d, Validation Likelihood: %.5f, Validation Error Number: %.1f" % (step,-1*l,vp))
+
+    feed_dict={x_train:test_dataset,y_train:test_labels}
+    _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+    print("Test Error Number: %.1f" % tp)
+    return validate_error
 
 def l1(batch_size,learning_rate,hidden_num):
   with np.load("notMNIST.npz") as data:
@@ -284,46 +278,45 @@ def l1(batch_size,learning_rate,hidden_num):
 
     cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits,y_train))
 
-    optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
+    optimizer=tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.nn.relu(tf.add(tf.matmul(valid_dataset,w1),b1))
-    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w4),b4))
-    test_prediction=tf.nn.relu(tf.add(tf.matmul(test_dataset,w1),b1))
-    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w4),b4))
 
+    er=accuracy(train_prediction,y_train)
 
-  step_num=2000
+  epoch_num=100
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
     #print ("initialized")
-    va=[]
-    ta=[]
-    for step in range (step_num):
-      offset=(step*batch_size)%(train_labels.shape[0]-batch_size)
-      x_batch=train_dataset[offset:(offset+batch_size),:]
-      y_batch=train_labels[offset:(offset+batch_size),:]
+    training_likelihood=[]
+    training_error=[]
+    validate_likelihood=[]
+    validate_error=[]
+
+    for step in range (epoch_num):
+      for j in range (150):
+        x_batch=train_dataset[j*batch_size:(j+1)*batch_size]
+        y_batch=train_labels[j*batch_size:(j+1)*batch_size]
 
 
-      feed_dict={x_train:x_batch,y_train:y_batch}
-      _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
-                               feed_dict=feed_dict)
+        feed_dict={x_train:x_batch,y_train:y_batch}
+        _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
 
-      if (step%200==0):
-        #print ("Minibatch loss at step %d: %f" %(step,l))
-        #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
-        va.append(accuracy(vp,valid_labels))
-        ta.append(accuracy(tp,test_labels))
-        #if len(va)>5 and va[-1]<va[-2] and va[-1]<va[-3]:
-        #  va.pop(1)
-        #  ta.pop(1)
-        #  break
+      training_error.append(tp)
+      training_likelihood.append(-1*l)
 
-        #print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
-    print("Test accuracy: %.1f%%" % ta[-1])
-    print va
-    return va
+      feed_dict={x_train:valid_dataset,y_train:valid_labels}
+      _,l,vp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+      validate_error.append(vp)
+      validate_likelihood.append(-1*l)
+
+      print("Epoch %03d, Validation Likelihood: %.5f, Validation Error Number: %.1f" % (step,-1*l,vp))
+
+    feed_dict={x_train:test_dataset,y_train:test_labels}
+    _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+    print("Test Error Number: %.1f" % tp)
+    return validate_error
 
 if __name__=="__main__":
 
