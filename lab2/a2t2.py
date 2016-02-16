@@ -2,8 +2,6 @@ import numpy as np
 import tensorflow as tf
 
 def accuracy(predictions, labels):
-  predictions=tf.cast(predictions,"float32")
-  labels=tf.cast(labels,"float32")
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/ predictions.shape[0])
 
 def a2t2(batch_size,learning_rate):
@@ -67,10 +65,7 @@ def a2t2(batch_size,learning_rate):
     optimizer=tf.train.AdamOptimizer(learning_rate).minimize(cost)
 
     train_prediction=tf.nn.softmax(logits)
-    valid_prediction=tf.add(tf.matmul(valid_dataset,w),b)
-    valid_prediction=tf.nn.softmax(tf.add(tf.matmul(valid_prediction,w2),b2))
-    test_prediction=tf.add(tf.matmul(test_dataset,w),b)
-    test_prediction=tf.nn.softmax(tf.add(tf.matmul(test_prediction,w2),b2))
+    er=accuracy(train_prediction,y_train)
 
   step_num=150000
 
@@ -86,21 +81,24 @@ def a2t2(batch_size,learning_rate):
 
 
       feed_dict={x_train:x_batch,y_train:y_batch}
-      _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
-                               feed_dict=feed_dict)
+      _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
 
       if (step%1500==0):
         #print ("Minibatch loss at step %d: %f" %(step,l))
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
+        feed_dict={x_train:valid_dataset,y_train:valid_labels}
+        _,l,vp=session.run([optimizer,cost,er], feed_dict=feed_dict)
         va.append(accuracy(vp,valid_labels))
-        ta.append(accuracy(tp,test_labels))
+
         #if len(va)>5:
         #  va.pop(1)
         #  ta.pop(1)
         #  break
 
         print("Validation accuracy: %.1f%%" % accuracy(vp,valid_labels))
-    print("Test accuracy: %.1f%%" % ta[-1])
+    feed_dict={x_train:test_dataset,y_train:test_labels}
+    _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+    print("Test accuracy: %.1f%%" % tp)
     return va
 
 if __name__=="__main__":
