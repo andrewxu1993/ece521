@@ -69,21 +69,21 @@ def a2t2(batch_size,learning_rate):
 
     er=accuracy(train_prediction,y_train)
 
-  step_num=150000
+  epoch_num=50
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
     #print ("initialized")
     va=[]
     ta=[]
-    for step in range (step_num):
-      offset=(step*batch_size)%(train_labels.shape[0]-batch_size)
-      x_batch=train_dataset[offset:(offset+batch_size),:]
-      y_batch=train_labels[offset:(offset+batch_size),:]
+    for step in range (epoch_num):
+      for j in range (15000/batch_size):
+        x_batch=train_dataset[j*batch_size:(j+1)*batch_size,:]
+        y_batch=train_labels[j*batch_size:(j+1)*batch_size,:]
 
 
-      feed_dict={x_train:x_batch,y_train:y_batch}
-      _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+        feed_dict={x_train:x_batch,y_train:y_batch}
+        _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
 
       if (step%1500==0):
         #print ("Minibatch loss at step %d: %f" %(step,l))
@@ -107,9 +107,11 @@ if __name__=="__main__":
   vas=[]
 
 
-
-  #vas.append(a2t2(100,0.000001))
+  print ("Learning rate = %.10f" %0.000001)
+  vas.append(a2t2(100,0.000001))
+  print ("Learning rate = %.10f" %0.00001)
   vas.append(a2t2(100,0.00001))
+  print ("Learning rate = %.10f" %0.0001)
   vas.append(a2t2(100,0.0001))
 
 
