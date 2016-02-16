@@ -96,10 +96,10 @@ def a2t2(batch_size,learning_rate):
         #  ta.pop(1)
         #  break
 
-        print("Validation Error Number: .1f%%" % vp)
+        print("Validation Error Number: %.1f%" % vp)
     feed_dict={x_train:test_dataset,y_train:test_labels}
     _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
-    print("Test Error Number: .1f%%" % tp)
+    print("Test Error Number: %.1f%" % tp)
     return va
 
 if __name__=="__main__":
