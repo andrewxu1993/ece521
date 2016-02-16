@@ -61,7 +61,7 @@ def a2t2(batch_size,learning_rate):
     logits=tf.matmul(logits,w2)
     logits=tf.add(logits,b2)
 
-    cost=tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=y_train)
+    cost=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=y_train))
 
     optimizer=tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
@@ -113,6 +113,11 @@ if __name__=="__main__":
   vas.append(a2t2(100,0.00001))
   print ("Learning rate = %.10f" %0.0001)
   vas.append(a2t2(100,0.0001))
+  print ("Learning rate = %.10f" %0.000001)
+  vas.append(a2t2(100,0.001))
+  print ("Learning rate = %.10f" %0.00001)
+  vas.append(a2t2(100,0.01))
+
 
 
 
