@@ -2,6 +2,8 @@ import numpy as np
 import tensorflow as tf
 
 def accuracy(predictions, labels):
+  predictions=tf.cast(predictions,"float32")
+  labels=tf.cast(labels,"float32")
   return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1))/ predictions.shape[0])
 
 def a2t2(batch_size,learning_rate):
@@ -39,13 +41,13 @@ def a2t2(batch_size,learning_rate):
 
 
   with graph.as_default():
-    x_train=tf.placeholder(tf.float32,shape=(batch_size,image_size*image_size))
-    y_train=tf.placeholder(tf.float32,shape=(batch_size,num_labels))
+    x_train=tf.placeholder(tf.float32,shape=(None,image_size*image_size))
+    y_train=tf.placeholder(tf.float32,shape=(None,num_labels))
 
 
     # layer 1
-    w=tf.Variable(tf.truncated_normal([image_size*image_size,hidden_num]))
-    b=tf.Variable(tf.truncated_normal([hidden_num]))
+    w=tf.Variable(tf.truncated_normal([image_size*image_size,hidden_num],0.1))
+    b=tf.Variable(tf.truncated_normal([hidden_num],0.1))
 
     # layer 2
     w2=tf.Variable(tf.truncated_normal([hidden_num,num_labels]))
