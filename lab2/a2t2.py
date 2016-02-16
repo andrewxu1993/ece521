@@ -69,7 +69,7 @@ def a2t2(batch_size,learning_rate):
 
     er=accuracy(train_prediction,y_train)
 
-  epoch_num=50
+  epoch_num=100
 
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
@@ -80,7 +80,7 @@ def a2t2(batch_size,learning_rate):
     validate_error=[]
 
     for step in range (epoch_num):
-      for j in range (15000/batch_size):
+      for j in range (15000.0/batch_size):
         x_batch=train_dataset[j*batch_size:(j+1)*batch_size,:]
         y_batch=train_labels[j*batch_size:(j+1)*batch_size,:]
 
@@ -104,7 +104,6 @@ def a2t2(batch_size,learning_rate):
     return validate_error
 
 if __name__=="__main__":
-  print ("Stamp 6")
   vas=[]
 
 
