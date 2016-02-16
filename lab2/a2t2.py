@@ -87,7 +87,7 @@ def a2t2(batch_size,learning_rate):
       _,l,tp,vp,tp=session.run([optimizer,cost,train_prediction,valid_prediction,test_prediction],
                                feed_dict=feed_dict)
 
-      if (step%15000==0):
+      if (step%1500==0):
         #print ("Minibatch loss at step %d: %f" %(step,l))
         #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
         va.append(accuracy(vp,valid_labels))
@@ -106,12 +106,8 @@ if __name__=="__main__":
   vas=[]
 
 
-  #vas.append(a2t2(200,0.0001))
-  #vas.append(a2t2(100,0.0001))
-  #vas.append(a2t2(50,0.0001))
-  #vas.append(a2t2(20,0.0001))
 
-  vas.append(a2t2(100,0.000001))
+  #vas.append(a2t2(100,0.000001))
   vas.append(a2t2(100,0.00001))
   vas.append(a2t2(100,0.0001))
 
