@@ -74,8 +74,11 @@ def a2t2(batch_size,learning_rate):
   with tf.Session(graph=graph) as session:
     tf.initialize_all_variables().run()
     #print ("initialized")
-    va=[]
-    ta=[]
+    training_likelihood=[]
+    training_error=[]
+    validate_likelihood=[]
+    validate_error=[]
+
     for step in range (epoch_num):
       for j in range (15000/batch_size):
         x_batch=train_dataset[j*batch_size:(j+1)*batch_size,:]
@@ -85,22 +88,20 @@ def a2t2(batch_size,learning_rate):
         feed_dict={x_train:x_batch,y_train:y_batch}
         _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
 
-      if (step%1500==0):
-        #print ("Minibatch loss at step %d: %f" %(step,l))
-        #print("Minibatch accuracy: %.1f%%" % accuracy(tp,y_batch))
-        feed_dict={x_train:valid_dataset,y_train:valid_labels}
-        _,l,vp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+      training_error.append(tp)
+      training_likelihood.append(-1*l)
 
-        #if len(va)>5:
-        #  va.pop(1)
-        #  ta.pop(1)
-        #  break
+      feed_dict={x_train:valid_dataset,y_train:valid_labels}
+      _,l,vp=session.run([optimizer,cost,er], feed_dict=feed_dict)
+      validate_error.append(vp)
+      validate_likelihood.append(-1*l)
 
-        print("Validation Error Number: %.1f" % vp)
+      print("Validation Likelihood: %.5f, Validation Error Number: %.1f" % (-1*l,vp))
+
     feed_dict={x_train:test_dataset,y_train:test_labels}
     _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
     print("Test Error Number: %.1f" % tp)
-    return va
+    return validate_error
 
 if __name__=="__main__":
   print ("Stamp 6")
