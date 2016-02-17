@@ -113,9 +113,9 @@ if __name__=="__main__":
   vas=[]
 
 
-
-  vas.append(a2t4(100,0.01,500)) # the best
-
+  vas.append(a2t4(100,0.001,500)) # the best
+  vas.append(a2t4(100,0.0001,500)) # the best
+  vas.append(a2t4(100,0.00001,500)) # the best
 
 
   print vas
