@@ -101,7 +101,7 @@ def a2t2(batch_size,learning_rate):
     feed_dict={x_train:test_dataset,y_train:test_labels}
     _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
     print("Test Error Number: %.1f" % tp)
-    return validate_error
+    return tp
 
 if __name__=="__main__":
   vas=[]
