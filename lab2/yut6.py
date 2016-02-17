@@ -36,15 +36,7 @@ def neural_network(images_train, labels_train, images_val,labels_val, images_tes
 
     # Initiate the neural network
     for i in range(layer_num+1):
-        if i == 0 and layer_num==1:
-            W.append(tf.Variable(tf.random_normal(([784, hidden_num[i][1]]),0,1), name="weight%d"%i))
-            b.append(tf.Variable(tf.random_normal(([10]),0,1), name="bias%d"%i))
-            Z.append(tf.add(tf.matmul(X, W[i]), b[i]))
-            Z[i] = tf.nn.relu(Z[i])
-            if dropout:
-                Z[i]=tf.nn.dropout(Z[i],keep_prob)
-            break
-        elif i == 0:
+        if i == 0:
             W.append(tf.Variable(tf.random_normal(([784, hidden_num[i][1]]),0,1), name="weight%d"%i))
             b.append(tf.Variable(tf.random_normal(([hidden_num[i][1]]),0,1), name="bias%d"%i))
             Z.append(tf.add(tf.matmul(X, W[i]), b[i]))
@@ -88,7 +80,7 @@ def neural_network(images_train, labels_train, images_val,labels_val, images_tes
     costs_train = []
     errors_eval = []
     costs_eval = []
-    epoch_num = 2
+    epoch_num = 10
     errors_trend = []
     weight_save = []
     weight_copy = []
