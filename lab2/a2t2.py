@@ -107,11 +107,11 @@ if __name__=="__main__":
   vas=[]
 
 
-  print ("Learning rate = %.10f" %0.000001)
-  vas.append(a2t2(100,0.000001))
-  print ("Learning rate = %.10f" %0.00001)
-  vas.append(a2t2(100,0.00001))
-  print ("Learning rate = %.10f" %0.0001)
+  #print ("Learning rate = %.10f" %0.000001)
+  #vas.append(a2t2(100,0.000001))
+  ##print ("Learning rate = %.10f" %0.00001)
+  #vas.append(a2t2(100,0.00001))
+  #print ("Learning rate = %.10f" %0.0001)
   vas.append(a2t2(100,0.0001))
   print ("Learning rate = %.10f" %0.001)
   vas.append(a2t2(100,0.001))
