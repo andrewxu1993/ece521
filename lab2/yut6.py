@@ -1,6 +1,8 @@
 import numpy as np
 import tensorflow as tf
 from matplotlib import pyplot as plt
+import random as rd
+from datetime import datetime
 
 with np.load("notMNIST.npz") as data:
     images, labels  =data["images"], data["labels"]
@@ -34,15 +36,21 @@ def neural_network(images_train, labels_train, images_val,labels_val, images_tes
 
     # Initiate the neural network
     for i in range(layer_num+1):
-        if i == 0:
+        if i == 0 and layer_num==1:
+            W.append(tf.Variable(tf.random_normal(([784, hidden_num[i][1]]),0,1), name="weight%d"%i))
+            b.append(tf.Variable(tf.random_normal(([10]),0,1), name="bias%d"%i))
+            Z.append(tf.add(tf.matmul(X, W[i]), b[i]))
+            Z[i] = tf.nn.relu(Z[i])
+            if dropout:
+                Z[i]=tf.nn.dropout(Z[i],keep_prob)
+            break
+        elif i == 0:
             W.append(tf.Variable(tf.random_normal(([784, hidden_num[i][1]]),0,1), name="weight%d"%i))
             b.append(tf.Variable(tf.random_normal(([hidden_num[i][1]]),0,1), name="bias%d"%i))
             Z.append(tf.add(tf.matmul(X, W[i]), b[i]))
             Z[i] = tf.nn.relu(Z[i])
             if dropout:
                 Z[i]=tf.nn.dropout(Z[i],keep_prob)
-            if layer_num == 1:
-                break
         elif i == layer_num:
             W.append(tf.Variable(tf.random_normal(([hidden_num[i-1][1], 10]),0,1), name="weight%d"%i))
             b.append(tf.Variable(tf.random_normal(([10]),0,1), name="bias%d"%i))
@@ -150,5 +158,23 @@ def neural_network(images_train, labels_train, images_val,labels_val, images_tes
 
 
 # Task 6
-
-print neural_network(image_train,label_train,image_val,label_val,image_test,label_test,0.001,[[0,500],[1,500]],2,True)
+for i in range(10):
+    print i
+    rd.seed(datetime.now())
+    learning_r=10**rd.uniform(-2,-4)
+    layer_num=rd.randint(1,3)
+    hidden_num=rd.randint(1,5)*100
+    if layer_num==1:
+        hidden_matrix=[[0,hidden_num]]
+    elif layer_num==2:
+        hidden_matrix=[[0,hidden_num],[1,hidden_num]]
+    else:
+        hidden_matrix=[[0,hidden_num],[1,hidden_num],[2,hidden_num]]
+    dropout=rd.randint(0,1)
+    if dropout==0:
+        dropout=False
+    else:
+        drop=True
+    ers= neural_network(image_train,label_train,image_val,label_val,image_test,label_test,learning_r,hidden_matrix,layer_num,True)
+    print ("Case with learning rate %.8f, %1d layers and hidden units %4d at each layer has validating errors: %.1f" %(learning_r,
+                layer_num,hidden_num,ers))
