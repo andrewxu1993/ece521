@@ -104,7 +104,7 @@ def l2(batch_size,learning_rate,hidden_num):
       validate_error.append(vp)
       validate_likelihood.append(-1*l)
 
-      print("Epoch %03d, Validation Likelihood: %.5f, Validation Error Number: %.1f" % (step,-1*l,vp))
+      print("Epoch %03d, Training Error Number: %.1f, Validation Error Number: %.1f" % (step,tp,vp))
 
     feed_dict={x_train:test_dataset,y_train:test_labels}
     _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
@@ -214,7 +214,7 @@ def l3(batch_size,learning_rate,hidden_num):
       validate_error.append(vp)
       validate_likelihood.append(-1*l)
 
-      print("Epoch %03d, Validation Likelihood: %.5f, Validation Error Number: %.1f" % (step,-1*l,vp))
+      print("Epoch %03d, Training Error Number: %.1f, Validation Error Number: %.1f" % (step,tp,vp))
 
     feed_dict={x_train:test_dataset,y_train:test_labels}
     _,l,tp=session.run([optimizer,cost,er], feed_dict=feed_dict)
